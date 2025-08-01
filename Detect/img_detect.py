@@ -4,7 +4,7 @@ from ultralytics import YOLO
 
 model = YOLO('runs/train/exp2_m_20_cur_best/weights/best.pt')
 
-img_path = 'data/back_up_data/images/ZB1555.png'
+img_path = 'data/images/001_glasses_nonsleepyCombination_0_notdrowsy copy.jpg'
 
 def resize_image_manual(img_path, target_size=(640, 640)):
     # Đọc ảnh

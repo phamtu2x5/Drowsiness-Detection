@@ -1,7 +1,7 @@
 import cv2
 import time
 from ultralytics import YOLO
-model=YOLO('runs/train/exp3_m_30/weights/best.pt')
+model=YOLO('runs/train/exp2_m_20_cur_best/weights/best.pt')
 cap=cv2.VideoCapture(0)
 while cap.isOpened():
     ret,frame=cap.read()
