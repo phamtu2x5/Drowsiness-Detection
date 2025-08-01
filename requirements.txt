@@ -1,0 +1,11 @@
+setuptools>=68.0.0
+wheel>=0.41.0
+numpy>=1.26.0
+flask>=2.3.0
+opencv-python-headless>=4.8.0
+ultralytics>=8.0.0
+pillow>=10.0.0
+torch>=2.0.0
+torchvision>=0.15.0
+werkzeug>=2.3.0
+gunicorn>=21.0.0 
