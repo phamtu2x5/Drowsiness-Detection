@@ -21,7 +21,7 @@ results_img = results[0].plot()
 results_img_rgb = cv2.cvtColor(results_img, cv2.COLOR_BGR2RGB)
 
 plt.figure(figsize=(12, 8))
-plt.imshow(results_img_rgb)
+plt.imshow(results_img)
 plt.title('Drowsiness Detection (Manual Resize: 640x640)')
 plt.axis('off')
 plt.show()

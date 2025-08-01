@@ -1,6 +1,6 @@
 import os
 
-label_dir = 'data/labels'  
+label_dir = 'data/test/labels'  
 awake_count = 0
 drowsy_count = 0
 

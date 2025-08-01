@@ -4,6 +4,6 @@ metrics = model.val(
     data='data.yaml',
     split='test',
     project='runs/val',
-    name='val_exp3_m_30',
+    name='val_exp_m_20',
     )
 print(metrics)
