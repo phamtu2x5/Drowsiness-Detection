@@ -1,7 +1,7 @@
 import os
 
 # Đường dẫn tới thư mục chứa ảnh
-folder_path = 'data/test/images'
+folder_path = 'Test/Source'
 
 # Các đuôi file ảnh phổ biến
 image_extensions = ('.txt','.jpg')

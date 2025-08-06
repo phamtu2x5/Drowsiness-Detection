@@ -6,7 +6,7 @@ from ultralytics import YOLO
 model = YOLO('runs/train/exp2_m_20_cur_best/weights/best.pt')
 
 # Open video file
-video_path = "Video/Source/test.mp4"  
+video_path = "Test/Source/test.mp4"  
 cap = cv2.VideoCapture(video_path)
 
 # Get video properties for output
@@ -15,7 +15,7 @@ width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
 # Setup video writer
-output_path = "Video/Result/test_detected.mp4"  # Tên file output
+output_path = "Test/Result/test_detected.mp4"  # Tên file output
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 writer = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
 
@@ -61,11 +61,9 @@ cv2.destroyAllWindows()
 total_time = time.time() - start_time
 read_fps = total_frames / total_time if total_time > 0 else 0
 processing_fps = processed_frames / total_time if total_time > 0 else 0
-skipped_fps = (total_frames - processed_frames) / total_time if total_time > 0 else 0
 avg_frame_time = total_processing_time / processed_frames if processed_frames > 0 else 0
 
 print(f"Tổng thời gian xử lý: {total_time:.2f} giây")
 print(f"Đọc: {read_fps:.2f} frame/giây")
 print(f"Xử lý: {processing_fps:.2f} frame/giây")
-print(f"Bỏ qua: {skipped_fps:.2f} frame/giây")
 print(f"Thời gian xử lý 1 frame trung bình: {avg_frame_time*1000:.2f} ms")

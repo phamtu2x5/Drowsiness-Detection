@@ -1,8 +1,8 @@
 import os
 
 # Đường dẫn tới thư mục chứa ảnh và nhãn
-img_dir = 'data/test/images'    # Thay bằng đường dẫn thực tế tới thư mục ảnh
-label_dir = 'data/test/labels'  # Thay bằng đường dẫn thực tế tới thư mục nhãn
+img_dir = 'data1/images'    # Thay bằng đường dẫn thực tế tới thư mục ảnh
+label_dir = 'data1/labels'  # Thay bằng đường dẫn thực tế tới thư mục nhãn
 
 # Lấy danh sách tên file (không có đuôi mở rộng)
 img_files = [os.path.splitext(f)[0] for f in os.listdir(img_dir) if f.lower().endswith(('.jpg'))]
