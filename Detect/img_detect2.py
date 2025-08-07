@@ -8,7 +8,7 @@ import glob
 model = YOLO('runs/train/exp2_m_20_cur_best/weights/best.pt')
 
 # Input and output paths
-source_path = 'data1/images'
+source_path = 'Test/Source'
 result_path = 'Test/Result'
 
 # Create result directory if it doesn't exist

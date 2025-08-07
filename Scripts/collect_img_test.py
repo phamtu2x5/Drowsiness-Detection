@@ -3,8 +3,8 @@ import time
 import os
 import cv2
 
-IMAGE_PATH=os.path.join('Datatest','Images')
-labels=['awake']
+IMAGE_PATH=os.path.join('TU','Images')
+labels=['drowsy']
 number_imgs=50
 
 cap=cv2.VideoCapture(0)
