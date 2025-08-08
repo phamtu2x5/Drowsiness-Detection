@@ -6,7 +6,7 @@ from ultralytics import YOLO
 model = YOLO('runs/train/exp2_m_20_cur_best/weights/best.pt')
 
 # Open video file
-video_path = "Test/Source/Video/Movie on 8-8-25 at 16.19.mov"  
+video_path = "Test/Source/Video/Movie on 8-8-25 at 21.01.mov"  
 cap = cv2.VideoCapture(video_path)
 
 # Get video properties for output
