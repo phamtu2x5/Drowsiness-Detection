@@ -3,10 +3,10 @@ import time
 from ultralytics import YOLO
 
 # Load model
-model = YOLO('runs/train/exp2_m_20_cur_best/weights/best.pt')
+model = YOLO('runs/train/exp_m_10/weights/best.pt')
 
 # Open video file
-video_path = "Test/Source/Video/Movie on 8-8-25 at 21.01.mov"  
+video_path = "Test/Source/Video/test.mp4"  
 cap = cv2.VideoCapture(video_path)
 
 # Get video properties for output
