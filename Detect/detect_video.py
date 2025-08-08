@@ -6,7 +6,7 @@ from ultralytics import YOLO
 model = YOLO('runs/train/exp2_m_20_cur_best/weights/best.pt')
 
 # Open video file
-video_path = "Test/Source/test.mp4"  
+video_path = "Test/Source/Video/Movie on 8-8-25 at 16.19.mov"  
 cap = cv2.VideoCapture(video_path)
 
 # Get video properties for output
@@ -15,14 +15,14 @@ width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
 # Setup video writer
-output_path = "Test/Result/test_detected.mp4"  # Tên file output
+output_path = "Test/Result/Video/test_detected.mp4"  # Tên file output
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 writer = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
 
 start_time = time.time()
 processed_frames = 0
 total_frames = 0
-skip_frames = 3  # Bỏ qua 3 frame, chỉ xử lý frame thứ 4
+skip_frames = 2  # Bỏ qua 2 frame, chỉ xử lý frame thứ 3
 last_results_img = None
 total_processing_time = 0
 
