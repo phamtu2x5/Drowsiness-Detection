@@ -26,11 +26,6 @@ source venv/bin/activate  # macOS/Linux
 pip install -r requirements.txt
 ```
 
-### Bước 4: Kiểm Tra
-
-```bash
-python check_device.py
-```
 
 ---
 
