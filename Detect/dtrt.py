@@ -1,29 +1,23 @@
 import cv2
 import time
 import os
-import torch
+import sys
+
+# Thêm thư mục gốc vào path để import config
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import config
 from ultralytics import YOLO
 
-# Kiểm tra CUDA có sẵn không
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
-print(f"🖥️  Đang sử dụng device: {device.upper()}")
-if device == 'cuda':
-    print(f"   GPU: {torch.cuda.get_device_name(0)}")
-    print(f"   CUDA Version: {torch.version.cuda}")
-else:
-    print("   ⚠️  Đang chạy trên CPU - tốc độ sẽ chậm hơn")
-
-# Lấy đường dẫn thư mục gốc project
-project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-model_path = os.path.join(project_root, 'runs/train/exp_s_20 2/weights/best.pt')
+# Hiển thị thông tin device
+device = config.print_device_info()
 
 # Kiểm tra model file có tồn tại không
-if not os.path.exists(model_path):
-    raise FileNotFoundError(f"❌ Không tìm thấy model tại: {model_path}")
+if not os.path.exists(config.MODEL_PATH):
+    raise FileNotFoundError(f"❌ Không tìm thấy model tại: {config.MODEL_PATH}")
 
-print(f"📦 Đang load model từ: {model_path}")
-model = YOLO(model_path)
-model.to(device)  # Chuyển model sang device (CUDA/CPU)
+print(f"📦 Đang load model từ: {config.MODEL_PATH}")
+model = YOLO(config.MODEL_PATH)
+model.to(device)
 print("✅ Model đã load thành công!\n")
 
 # Mở webcam
@@ -33,9 +27,9 @@ cap = cv2.VideoCapture(0)
 if not cap.isOpened():
     raise RuntimeError("❌ Không thể mở webcam! Kiểm tra camera của bạn.")
 
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 680)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-cap.set(cv2.CAP_PROP_FPS, 30)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, config.CAMERA_WIDTH)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, config.CAMERA_HEIGHT)
+cap.set(cv2.CAP_PROP_FPS, config.CAMERA_FPS)
 
 print("🎥 Webcam đã sẵn sàng!")
 print("📌 Nhấn 'q' để thoát\n")
@@ -54,7 +48,7 @@ try:
             break
         
         # Inference với device đã set
-        results = model(frame, conf=0.5, iou=0.5, device=device)
+        results = model(frame, conf=config.CONF_THRESHOLD, iou=config.IOU_THRESHOLD, device=device)
         results_img = results[0].plot()
         
         # Tính FPS
