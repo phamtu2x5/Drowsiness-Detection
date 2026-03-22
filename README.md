@@ -1,171 +1,161 @@
-# Drowsiness Detection System
+# Hệ Thống Phát Hiện Buồn Ngủ
 
-A computer vision-based drowsiness detection system that uses YOLO (You Only Look Once) object detection to identify drowsy and awake states in real-time video streams.
+Hệ thống phát hiện buồn ngủ real-time sử dụng YOLOv8 và Deep Learning.
 
-## 🚀 Features
+## 📖 Tổng Quan
 
-- **Real-time Detection**: Monitor drowsiness levels in live video feeds
-- **YOLO-based Model**: Uses Ultralytics YOLO for accurate object detection
-- **Multiple Input Sources**: Support for webcam, video files, and images
-- **17-Class Detection**: Includes drowsy/awake states plus various other objects
-- **Cross-platform**: Works on Windows, macOS, and Linux
+### Mục Tiêu
 
-## 📋 Requirements
+Phát hiện sớm dấu hiệu buồn ngủ để cảnh báo kịp thời, giảm thiểu tai nạn giao thông và tai nạn lao động.
 
-### System Requirements
-- Python 3.8 or higher
-- Webcam or video input device
-- Sufficient RAM for real-time processing
+### Ứng Dụng
 
-### Python Dependencies
-```bash
-pip install -r requirements.txt
-```
-
-Key dependencies include:
-- **Ultralytics** (≥8.0.0) - YOLO model framework
-- **OpenCV** (≥4.8.0) - Computer vision operations
-- **PyTorch** (≥2.0.0) - Deep learning framework
-- **NumPy** (≥1.26.0) - Numerical computations
-
-## 🏗️ Project Structure
-
-```
-Drowsiness-Detection/
-├── data/                   # Training and validation data
-├── Detect/                 # Detection scripts
-│   ├── detect_real_time.py # Real-time webcam detection
-│   ├── detect_video.py     # Video file detection
-│   └── img_detect.py       # Image detection
-├── Scripts/                # Utility and data processing scripts
-│   ├── collect_img_test.py # Test image collection
-│   ├── validation.py       # Data validation
-│   ├── check_data.py       # Data integrity checks
-│   ├── cnt_img.py          # Image counting utility
-│   └── cnt_labels.py       # Label counting utility
-├── Test/                   # Test data and results
-├── runs/                   # Training outputs and results
-├── main.ipynb              # Main Jupyter notebook
-├── data.yaml               # Dataset configuration
-└── requirements.txt         # Python dependencies
-```
-
-## 🚀 Quick Start
-
-### 1. Clone the Repository
-```bash
-git clone <repository-url>
-cd Drowsiness-Detection
-```
-
-### 2. Install Dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Run Real-time Detection
-```bash
-python Detect/detect_real_time.py
-```
-
-### 4. Test with Video File
-```bash
-python Detect/detect_video.py --source path/to/video.mp4
-```
-
-### 5. Analyze Single Image
-```bash
-python Detect/img_detect.py --source path/to/image.jpg
-```
-
-## 📊 Dataset Configuration
-
-The system is configured for 17 classes as defined in [`data.yaml`](data.yaml):
-
-- **Drowsiness Classes**: `awake`, `drowsy`
-- **Other Objects**: `person`, `car`, `tv`, `cat`, `dog`, and various food items
-
-## 🔧 Usage Examples
-
-### Real-time Webcam Detection
-```python
-from Detect.detect_real_time import detect_drowsiness
-
-# Start real-time drowsiness detection
-detect_drowsiness()
-```
-
-### Video File Analysis
-```python
-from Detect.detect_video import process_video
-
-# Process video file for drowsiness detection
-process_video("input_video.mp4", "output_video.mp4")
-```
-
-### Image Analysis
-```python
-from Detect.img_detect import detect_image
-
-# Analyze single image
-results = detect_image("test_image.jpg")
-```
-
-## 📈 Training and Model
-
-The project uses YOLO models trained on custom drowsiness detection datasets. Training configurations and results are stored in the `runs/` directory.
-
-### Training Data
-- **Training Images**: `data/images/`
-- **Validation Images**: `data/images/`
-- **Test Images**: `data/test/`
-
-## 🛠️ Development
-
-### Running Jupyter Notebook
-```bash
-jupyter notebook main.ipynb
-```
-
-### Data Validation
-```bash
-python Scripts/validation.py
-python Scripts/check_data.py
-```
-
-### Data Statistics
-```bash
-python Scripts/cnt_img.py      # Count images
-python Scripts/cnt_labels.py    # Count labels
-```
-
-## 📝 Notes
-
-- The system requires a webcam for real-time detection
-- Ensure sufficient lighting for optimal detection accuracy
-- Model performance may vary based on hardware capabilities
-- For best results, position the camera to capture clear facial features
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 📄 License
-
-This project is open source. Please check the repository for specific licensing information.
-
-## 🆘 Support
-
-If you encounter any issues or have questions:
-1. Check the existing documentation
-2. Review the Jupyter notebook examples
-3. Open an issue in the repository
-4. Check the utility scripts in the `Scripts/` folder for debugging
+- 🚗 Cảnh báo tài xế khi lái xe
+- 🏭 Giám sát công nhân vận hành máy móc
+- 🚛 Theo dõi tài xế đường dài
 
 ---
 
-**Happy detecting! 🚀**
+## 🎯 Phương Án Kỹ Thuật
+
+### Kiến Trúc Hệ Thống
+
+```
+Camera → Preprocessing → YOLOv8 Model → Detection → Alert/Display
+```
+
+### Model: YOLOv8m
+
+**Thông số:**
+- Parameters: 25.8M
+- Model Size: 50MB
+- Input: 640x640x3
+- Output: Bounding boxes + Classes (awake/drowsy)
+
+**Tại sao chọn YOLO:**
+- Real-time: 30-60 FPS (GPU)
+- Độ chính xác cao: 94.27% mAP
+- Single-stage: Nhanh và hiệu quả
+- Dễ deploy
+
+### Dataset
+
+- **Tổng số**: 3,050 ảnh
+  - Training: 2,439 ảnh (80%)
+  - Test: 611 ảnh (20%)
+- **Classes**: 2 classes (awake, drowsy)
+- **Format**: YOLO format (txt)
+
+### Training
+
+**Hyperparameters:**
+```python
+epochs = 20
+batch_size = 32
+image_size = 640
+optimizer = 'AdamW'
+learning_rate = 0.001
+```
+
+**Data Augmentation:**
+- Rotation: ±10°
+- Translation: ±10%
+- Scaling: ±20%
+- Horizontal flip: 50%
+
+
+**Per-class:**
+- Awake: 89.0% mAP50, 80.4% mAP50-95
+- Drowsy: 93.3% mAP50, 85.1% mAP50-95
+
+### Performance
+
+| Device | FPS | Time/Frame |
+|--------|-----|------------|
+| GPU (RTX 3060) | 42 FPS | 24ms |
+| CPU (i7) | 8 FPS | 125ms |
+
+---
+
+## 🏗️ Cấu Trúc Dự Án
+
+```
+Drowsiness-Detection/
+├── config.py              # Cấu hình tập trung
+├── Detect/                # Detection scripts
+│   ├── dtrt.py           # Real-time webcam
+│   ├── detect_video.py   # Video processing
+│   └── img_detect.py     # Batch images
+├── Scripts/               # Utilities
+├── data/                  # Dataset (images + labels)
+├── runs/                  # Training results
+└── main.ipynb            # Training notebook
+```
+---
+
+## 🔧 Tính Năng Chính
+
+### Đã Hoàn Thành ✅
+
+- Real-time detection qua webcam
+- Video file processing
+- Batch image processing
+- CUDA/CPU auto-detection
+- Configuration management
+- Error handling
+- FPS counter và statistics
+
+### Sắp Tới 🚧
+
+- Alert âm thanh khi drowsy
+- Tracking thời gian buồn ngủ
+- Statistics dashboard
+- Multi-face detection
+- Web interface
+
+---
+
+## 📊 So Sánh Phương Pháp
+
+| Phương pháp | Độ chính xác | Tốc độ | Robust |
+|-------------|--------------|--------|--------|
+| Eye Aspect Ratio | 70-80% | Rất nhanh | Thấp |
+| Facial Landmarks | 75-85% | Trung bình | Trung bình |
+| CNN Classification | 85-90% | Chậm | Cao |
+| **YOLO (Ours)** | **94%+** | **Nhanh** | **Cao** |
+
+---
+
+## 💻 Yêu Cầu Hệ Thống
+
+### Minimum
+- Python 3.8+
+- 4GB RAM
+- Webcam
+- CPU: Intel i5+
+
+### Recommended
+- Python 3.12
+- 8GB RAM
+- GPU: NVIDIA GTX 1660+ (6GB VRAM)
+- Webcam 1080p
+
+### Dependencies
+
+```
+torch==2.3.0
+torchvision==0.18.0
+ultralytics>=8.3.0
+opencv-python==4.10.0.84
+numpy>=1.26.0
+```
+---
+## 📚 Tài Liệu
+
+- **[HUONG_DAN_SU_DUNG.md](HUONG_DAN_SU_DUNG.md)** - Hướng dẫn chi tiết cách chạy
+- **[QUICKSTART.md](QUICKSTART.md)** - Quick start 5 phút
+- **[DOCS.md](DOCS.md)** - Giải thích các files
+
+
+
+**📘 Xem hướng dẫn sử dụng: [HUONG_DAN_SU_DUNG.md](HUONG_DAN_SU_DUNG.md)**
